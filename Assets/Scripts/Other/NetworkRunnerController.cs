@@ -4,11 +4,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class NetworkRunnerController : MonoBehaviour, INetworkRunnerCallbacks
+public partial class NetworkRunnerController : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner networkRunnerPrefab;
 
+    private NetworkRunner networkRunnerInstance;
+    private const string SCENE_NAME = "MainGame";
+    public async void StartGame(GameMode gameMode, string roomName)
+    {
+        if(networkRunnerInstance == null)
+        {
+            networkRunnerInstance = Instantiate(networkRunnerPrefab);
+        }
+        
+
+        networkRunnerInstance.AddCallbacks(this);
+        //networkRunnerInstance.ProvideInput = true;
+
+        StartGameArgs startGameArgs = new StartGameArgs()
+        {
+            GameMode = gameMode,
+            SessionName = roomName,
+            PlayerCount = 4,
+            SceneManager = networkRunnerInstance.GetComponent<INetworkSceneManager>(),
+        };
+
+
+        var result = await networkRunnerInstance.StartGame(startGameArgs);
+        if (result.Ok)
+        {
+            await networkRunnerInstance.LoadScene(SCENE_NAME);
+        }
+        else
+        {
+            Debug.LogError($"Failed to start:{result.ShutdownReason}");
+        }
+    }
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
