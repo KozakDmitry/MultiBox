@@ -6,6 +6,8 @@ namespace Scripts.Lobby
     public class LobbyUIManager : MonoBehaviour
     {
         [SerializeField]
+        private LoadingCanvasController loadingCanvasControllerPrefab;
+        [SerializeField]
         private LobbyPanelBase[] lobbyPanels;
 
 
@@ -15,6 +17,8 @@ namespace Scripts.Lobby
             {
                 lobby.Initialize(this);
             }
+
+            Instantiate(loadingCanvasControllerPrefab);
         }
 
 

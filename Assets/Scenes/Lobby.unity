@@ -331,6 +331,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &951057389 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1223984957747600886, guid: 1712a0b6f441d424eb86b6e332a88f4d, type: 3}
+  m_PrefabInstance: {fileID: 1617813433}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &1011511689 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1223984959125915800, guid: 1712a0b6f441d424eb86b6e332a88f4d, type: 3}
@@ -687,6 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63dbf1abe56bab94f8a753d4e0eadf9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingCanvasControllerPrefab: {fileID: 6765314561034323390, guid: 4c5ed6d282bd24f429ff463afb406c14, type: 3}
   lobbyPanels:
   - {fileID: 1993783324}
   - {fileID: 1919350588}
@@ -727,7 +739,8 @@ MonoBehaviour:
   joinRandomRoomButton: {fileID: 1617813437}
   joinRoomByArgButton: {fileID: 1617813436}
   createRoomButton: {fileID: 1617813435}
-  joinRoomByArgInputField: {fileID: 1617813434}
+  joinRoomByArgInputField: {fileID: 951057389}
+  createRoomInputField: {fileID: 1617813434}
 --- !u!1 &1993783322 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1223984958112238646, guid: 1712a0b6f441d424eb86b6e332a88f4d, type: 3}

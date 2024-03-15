@@ -13,8 +13,6 @@ namespace Scripts.Lobby
         private Animator PanelAnimator;
         protected LobbyUIManager lobbyUIManager;
 
-        const string POP_IN_ClIP_NAME = "In";
-        const string POP_OUT_ClIP_NAME = "Out";
         public enum LobbyPanelType
         {
             None,
@@ -30,13 +28,13 @@ namespace Scripts.Lobby
         {
             this.gameObject.SetActive(true);
             
-            PanelAnimator.Play(POP_IN_ClIP_NAME);
+            PanelAnimator.Play(Utilities.CLIP_NAME_IN);
         }
 
         protected void ClosePanel()
         {
-            PanelAnimator.Play(POP_OUT_ClIP_NAME);
-            StartCoroutine(Utilities.PlayAnimAndSetStateWhenFinished(gameObject, PanelAnimator, POP_OUT_ClIP_NAME,false));
+            PanelAnimator.Play(Utilities.CLIP_NAME_OUT);
+            StartCoroutine(Utilities.PlayAnimAndSetStateWhenFinished(gameObject, PanelAnimator, Utilities.CLIP_NAME_OUT,false));
 
         }
     }

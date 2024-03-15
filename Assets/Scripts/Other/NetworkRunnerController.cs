@@ -8,12 +8,23 @@ using UnityEngine.SceneManagement;
 
 public partial class NetworkRunnerController : MonoBehaviour, INetworkRunnerCallbacks
 {
+
+    public event Action OnStartedRunnerCollection;
+    public event Action OnPlayerJoinedSuccessfully;
     [SerializeField] private NetworkRunner networkRunnerPrefab;
 
     private NetworkRunner networkRunnerInstance;
     private const string SCENE_NAME = "MainGame";
+
+
+    public void ShutDownRunner()
+    {
+        networkRunnerInstance.Shutdown();
+    }
+
     public async void StartGame(GameMode gameMode, string roomName)
     {
+        OnStartedRunnerCollection?.Invoke();
         if(networkRunnerInstance == null)
         {
             networkRunnerInstance = Instantiate(networkRunnerPrefab);
@@ -32,7 +43,7 @@ public partial class NetworkRunnerController : MonoBehaviour, INetworkRunnerCall
         };
 
 
-        var result = await networkRunnerInstance.StartGame(startGameArgs);
+        StartGameResult result = await networkRunnerInstance.StartGame(startGameArgs);
         if (result.Ok)
         {
             await networkRunnerInstance.LoadScene(SCENE_NAME);
@@ -43,6 +54,11 @@ public partial class NetworkRunnerController : MonoBehaviour, INetworkRunnerCall
         }
     }
 
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.Log("PlayerJoined");
+        OnPlayerJoinedSuccessfully?.Invoke();
+    }
     public void OnConnectedToServer(NetworkRunner runner)
     {
         Debug.Log("ConnectedToServer");
@@ -93,10 +109,6 @@ public partial class NetworkRunnerController : MonoBehaviour, INetworkRunnerCall
         Debug.Log("ExitAOI");
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-        Debug.Log("PlayerJoined");
-    }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
@@ -131,6 +143,7 @@ public partial class NetworkRunnerController : MonoBehaviour, INetworkRunnerCall
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
         Debug.Log("Shutdown");
+        SceneManager.LoadScene("Lobby");
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
